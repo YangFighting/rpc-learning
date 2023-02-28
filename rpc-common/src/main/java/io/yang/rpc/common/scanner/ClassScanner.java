@@ -36,13 +36,16 @@ public class ClassScanner {
     public static List<String> getClassNameList(String packageName) throws IOException {
 
         List<String> classNameList = new ArrayList<>();
-        // 获取包的名字
+        // 获取包的名字（ src.main.java 后的名字 例如 io/yang/rpc/common/scanner）
         String packageDirName = packageName.replace(".", "/");
+        // 以线程上下文类加载器（破坏双亲委派模型），返回所有同名的资源文件
         Enumeration<URL> dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
         //是否循环迭代
         boolean recursive = true;
         while (dirs.hasMoreElements()) {
-            // 获取下一个元素
+            // 获取下一个元素的资源路径 (通常样式是资源所在文件的路径+资源在文件中的路径)
+            // 类文件的资源路径为 file:/E:/xxx/rpc-learning/rpc-common/target/classes/io/yang/rpc/common/scanner
+            // 类单元测试文件的资源路径为 file:/E:/xxx/rpc-learning/rpc-common/target/test-classes/io/yang/rpc/common/scanner
             URL url = dirs.nextElement();
             String protocol = url.getProtocol();
             if (StringUtils.equals(PROTOCOL_FILE, protocol)) {
