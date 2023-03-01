@@ -31,29 +31,31 @@ public class RpcServiceScanner extends ClassScanner {
         if (CollectionUtils.isEmpty(classNameList)) {
             return new HashMap<>();
         }
+        Map<String, Object> handlerMap = new HashMap<>();
         classNameList.forEach(className -> {
             try {
                 Class<?> clazz = Class.forName(className);
                 RpcService rpcService = clazz.getAnnotation(RpcService.class);
                 if (rpcService != null) {
                     //优先使用interfaceClass, 如果interfaceClass的name为空，再使用interfaceClassName
-                    LOGGER.info("当前标注了@RpcService注解的类实例名称===>>> " + clazz.getName());
-                    LOGGER.info("@RpcService注解上标注的属性信息如下：");
-                    LOGGER.info("interfaceClass===>>> " + rpcService.interfaceClass().getName());
-                    LOGGER.info("interfaceClassName===>>> " + rpcService.interfaceClassName());
-                    LOGGER.info("version===>>> " + rpcService.version());
-                    LOGGER.info("group===>>> " + rpcService.group());
+
+                    //TODO 后续逻辑向注册中心注册服务元数据，同时向handlerMap中记录标注了RpcService注解的类实例
+                    //handlerMap中的Key先简单存储为serviceName+version+group，后续根据实际情况处理key
+                    String serviceName = getServiceName(rpcService);
+                    String key = serviceName.concat(rpcService.version()).concat(rpcService.group());
+                    handlerMap.put(key, clazz.newInstance());
 
                 }
-            } catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
                 LOGGER.error("scan classes throws exception: ", e);
             }
         });
-        return new HashMap<>();
+        return handlerMap;
     }
 
     /**
-     * todo 获取serviceName 的顺序有什么意思
+     * Q: 获取serviceName 的顺序有什么意思
+     * A: 优先使用 interfaceClass 参数获取 rpc服务提供者 类
      * @param rpcService 注解
      * @return 获取serviceName
      */
