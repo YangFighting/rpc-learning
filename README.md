@@ -8,6 +8,8 @@ https://gitcode.net/binghe001/bhrpc-learning
 
 类扫描器的时候，使用线程上下文加载器获取包名的资源文件，这里破坏了双亲委派模型，
 
+1. Q: 线程上下文加载器如何破坏双亲委派模型
+
 1. 类扫描器和spring类扫描器的区别
 2. JDBC中的SPI中打破双亲委派模型有什么联系
 
@@ -31,3 +33,12 @@ interfaceClassName 记录的类名，就是一个字符串
 
 Q: netty执行后，如果客户端没有输入，服务端会不断打印 �� 
 
+## 第六章
+
+核心类如下，其中RpcProtocol类的 消息头header通过RpcHeaderFactory类构建出请求消息头或者响应消息头，消息体body为泛型对象，响应类RpcResponse 或者 请求类RpcRequest通过消息体body传入到RpcProtocol类中
+
+![](https://article-images.zsxq.com/FjeIs6dRol1WtTT4GrVpvpJPsdlu)
+
+Q：自定义网络协议中魔数的作用
+
+A：用于快速识别TCP数据包，如果魔数不一致，则直接拒绝并关闭连接
