@@ -27,7 +27,7 @@ public class RpcTestConsumerHandler extends SimpleChannelInboundHandler<RpcProto
         RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
         protocol.setHeader(RpcHeaderFactory.getRequestHeader(RpcConstants.SERIALIZATION_JDK));
         RpcRequest request = new RpcRequest();
-        request.setClassName("io.yang.rpc.test.DemoService");
+        request.setClassName("io.yang.rpc.test.api.DemoService");
         request.setGroup("yang");
         request.setMethodName("hello");
         request.setParameters(new Object[]{"yang"});
