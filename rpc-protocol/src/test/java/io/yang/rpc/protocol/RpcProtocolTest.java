@@ -16,14 +16,18 @@ public class RpcProtocolTest {
 
     public void getRpcProtocol(){
         RpcHeader requestHeader = RpcHeaderFactory.getRequestHeader(RpcConstants.SERIALIZATION_JDK);
-        RpcRequest rpcRequest = new RpcRequest();
-        rpcRequest.setOneway(false);
-        rpcRequest.setAsync(false);
-
-
+        RpcRequest body = new RpcRequest();
+        body.setOneway(false);
+        body.setAsync(false);
+        body.setClassName("io.binghe.rpc.demo.RpcProtocol");
+        body.setMethodName("hello");
+        body.setGroup("binghe");
+        body.setParameters(new Object[]{"binghe"});
+        body.setParameterTypes(new Class[]{String.class});
+        body.setVersion("1.0.0");
         RpcProtocol<RpcRequest> protocol = new RpcProtocol<>();
         protocol.setHeader(requestHeader);
-        protocol.setBody(rpcRequest);
+        protocol.setBody(body);
     }
 
 }

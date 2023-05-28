@@ -10,6 +10,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.yang.rpc.codec.RpcDecoder;
+import io.yang.rpc.codec.RpcEncoder;
 import io.yang.rpc.provider.common.handler.RpcProviderHandler;
 import io.yang.rpc.provider.common.server.api.Server;
 import org.apache.commons.lang3.StringUtils;
@@ -53,8 +55,8 @@ public class BaseServer implements Server {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                .addLast(new StringDecoder())
-                                .addLast(new StringEncoder())
+                                .addLast(new RpcDecoder())
+                                .addLast(new RpcEncoder())
                                 .addLast(new RpcProviderHandler(handlerMap));
                     }
                 }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
