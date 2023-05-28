@@ -8,8 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import io.yang.rpc.codec.RpcDecoder;
 import io.yang.rpc.codec.RpcEncoder;
 import io.yang.rpc.provider.common.handler.RpcProviderHandler;
@@ -35,12 +33,16 @@ public class BaseServer implements Server {
     //存储的是实体类关系
     protected Map<String, Object> handlerMap = new HashMap<>();
 
-    public BaseServer(String serverAddress) {
+    private final String reflectType;
+
+
+    public BaseServer(String serverAddress, String reflectType) {
         if (!StringUtils.isEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             this.host = serverArray[0];
             this.port = Integer.parseInt(serverArray[1]);
         }
+        this.reflectType = reflectType;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class BaseServer implements Server {
                         socketChannel.pipeline()
                                 .addLast(new RpcDecoder())
                                 .addLast(new RpcEncoder())
-                                .addLast(new RpcProviderHandler(handlerMap));
+                                .addLast(new RpcProviderHandler(reflectType, handlerMap));
                     }
                 }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
         try {
