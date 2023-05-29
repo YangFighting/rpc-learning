@@ -38,10 +38,10 @@ public class RpcConsumer {
                 .handler(new RpcConsumerInitializer());
     }
 
-    public static RpcConsumer getInstance(){
-        if (instance == null){
-            synchronized (RpcConsumer.class){
-                if (instance == null){
+    public static RpcConsumer getInstance() {
+        if (instance == null) {
+            synchronized (RpcConsumer.class) {
+                if (instance == null) {
                     instance = new RpcConsumer();
                 }
             }
@@ -49,26 +49,26 @@ public class RpcConsumer {
         return instance;
     }
 
-    public void close(){
+    public void close() {
         eventLoopGroup.shutdownGracefully();
     }
 
-    public void sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception{
+    public Object sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
         //TODO 暂时写死，后续在引入注册中心时，从注册中心获取
         String serviceAddress = "127.0.0.1";
         int port = 27880;
         String key = serviceAddress.concat("_").concat(String.valueOf(port));
         RpcConsumerHandler handler = handlerMap.get(key);
-        if(handler ==null){
+        if (handler == null) {
             handler = getRpcConsumerHandler(serviceAddress, port);
             handlerMap.put(key, handler);
-        }else if(!handler.getChannel().isActive()){
+        } else if (!handler.getChannel().isActive()) {
             //缓存中存在RpcClientHandler，但不活跃
             handler.close();
             handler = getRpcConsumerHandler(serviceAddress, port);
             handlerMap.put(key, handler);
         }
-        handler.sendRequest(protocol);
+        return handler.sendRequest(protocol);
     }
 
     /**

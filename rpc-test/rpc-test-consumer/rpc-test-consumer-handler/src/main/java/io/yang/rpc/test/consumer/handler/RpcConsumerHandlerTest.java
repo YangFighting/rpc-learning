@@ -4,6 +4,8 @@ import io.yang.rpc.consumer.common.RpcConsumer;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.header.RpcHeaderFactory;
 import io.yang.rpc.protocol.request.RpcRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zhangyang
@@ -11,11 +13,12 @@ import io.yang.rpc.protocol.request.RpcRequest;
  * @description: 测试服务消费者
  */
 public class RpcConsumerHandlerTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RpcConsumerHandlerTest.class);
 
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
-        consumer.sendRequest(getRpcRequestProtocol());
-        Thread.sleep(2000);
+        Object result = consumer.sendRequest(getRpcRequestProtocol());
+        LOGGER.info("从服务消费者获取到的数据===>>>" + result.toString());
         consumer.close();
 
     }
