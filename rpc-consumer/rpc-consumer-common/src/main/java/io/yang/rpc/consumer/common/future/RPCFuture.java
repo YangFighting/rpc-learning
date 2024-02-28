@@ -92,10 +92,12 @@ public class RPCFuture extends CompletableFuture<Object>  {
         private final int done = 1;
         private final int pending = 0;
 
+        @Override
         protected boolean tryAcquire(int acquires) {
             return getState() == done;
         }
 
+        @Override
         protected boolean tryRelease(int releases) {
             if (getState() == pending) {
                 if (compareAndSetState(pending, done)) {
