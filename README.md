@@ -156,3 +156,7 @@ Q: 同步、异步、单向调用的区别?
 
 
 
+## 第16章：服务消费者回调方法的实现
+
+Q: Rpc任务RPCFuture为什么要再加ReentrantLock，ReentrantLock与Sync（AQS）分别承担什么作用？
+

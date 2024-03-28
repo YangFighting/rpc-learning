@@ -6,6 +6,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.yang.rpc.common.threadpool.ClientThreadPool;
 import io.yang.rpc.consumer.common.future.RPCFuture;
 import io.yang.rpc.consumer.common.handler.RpcConsumerHandler;
 import io.yang.rpc.consumer.common.initializer.RpcConsumerInitializer;
@@ -52,6 +53,7 @@ public class RpcConsumer {
 
     public void close() {
         eventLoopGroup.shutdownGracefully();
+        ClientThreadPool.shutdown();
     }
 
     public RPCFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception {
