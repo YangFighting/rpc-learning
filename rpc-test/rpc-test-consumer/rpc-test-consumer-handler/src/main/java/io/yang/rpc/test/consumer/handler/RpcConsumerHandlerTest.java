@@ -1,6 +1,7 @@
 package io.yang.rpc.test.consumer.handler;
 
 import io.yang.rpc.consumer.common.RpcConsumer;
+import io.yang.rpc.consumer.common.context.RpcContext;
 import io.yang.rpc.consumer.common.future.RPCFuture;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.header.RpcHeaderFactory;
@@ -18,8 +19,17 @@ public class RpcConsumerHandlerTest {
 
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
-        RPCFuture future = consumer.sendRequest(getRpcRequestProtocol());
-        LOGGER.info("从服务消费者获取到的数据===>>>" + future.get());
+        // 同步，请求任务来自发送请求的返回
+//        RPCFuture future = consumer.sendRequest(getRpcRequestProtocol());
+
+        // 异步, 发送请求后， 请求任务来自上下文
+//        consumer.sendRequest(getRpcRequestProtocol());
+//        RPCFuture future = RpcContext.getContext().getRpcFuture();
+//        LOGGER.info("从服务消费者获取到的数据===>>>" + future.get());
+
+        // 单向调用，发送请求后 不需要关注返回
+        consumer.sendRequest(getRpcRequestProtocol());
+
         consumer.close();
 
     }
@@ -35,7 +45,7 @@ public class RpcConsumerHandlerTest {
         request.setParameters(new Object[]{"yang"});
         request.setParameterTypes(new Class[]{String.class});
         request.setVersion("1.0.0");
-        request.setAsync(false);
+        request.setAsync(true);
         request.setOneway(false);
         protocol.setBody(request);
         return protocol;
