@@ -1,7 +1,7 @@
-package io.yang.rpc.consumer.common.future;
+package io.yang.rpc.proxy.api.future;
 
 import io.yang.rpc.common.threadpool.ClientThreadPool;
-import io.yang.rpc.consumer.common.callback.AsyncRPCCallback;
+import io.yang.rpc.proxy.api.callback.AsyncRPCCallback;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.request.RpcRequest;
 import io.yang.rpc.protocol.response.RpcResponse;

@@ -7,7 +7,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.yang.rpc.consumer.common.context.RpcContext;
-import io.yang.rpc.consumer.common.future.RPCFuture;
+import io.yang.rpc.proxy.api.future.RPCFuture;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.header.RpcHeader;
 import io.yang.rpc.protocol.request.RpcRequest;

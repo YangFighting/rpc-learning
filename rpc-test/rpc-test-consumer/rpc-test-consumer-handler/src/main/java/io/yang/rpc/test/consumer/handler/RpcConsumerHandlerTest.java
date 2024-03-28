@@ -1,9 +1,8 @@
 package io.yang.rpc.test.consumer.handler;
 
 import io.yang.rpc.consumer.common.RpcConsumer;
-import io.yang.rpc.consumer.common.callback.AsyncRPCCallback;
-import io.yang.rpc.consumer.common.context.RpcContext;
-import io.yang.rpc.consumer.common.future.RPCFuture;
+import io.yang.rpc.proxy.api.callback.AsyncRPCCallback;
+import io.yang.rpc.proxy.api.future.RPCFuture;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.header.RpcHeaderFactory;
 import io.yang.rpc.protocol.request.RpcRequest;

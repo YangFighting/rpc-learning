@@ -1,4 +1,4 @@
-package io.yang.rpc.consumer.common.callback;
+package io.yang.rpc.proxy.api.callback;
 
 /**
  * @author zhangyang03

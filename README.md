@@ -160,3 +160,23 @@ Q: 同步、异步、单向调用的区别?
 
 Q: Rpc任务RPCFuture为什么要再加ReentrantLock，ReentrantLock与Sync（AQS）分别承担什么作用？
 
+
+
+## 第17章：服务消费者实现动态代理功能屏蔽构建请求协议对象的细节
+
+对象代理类 ObjectProxy 与 Rpc请求RpcRequest 参数差不多，为什么不直接合并？
+
+Q: InvocationHandler接口的作用？
+
+1. 定义代理对象如何创建对象
+2. ObjectProxy 和 JdkProxyFactory 分开是为了扩展代理功能
+3. 这里应该参考设计模式的 代理模式
+
+
+
+Q: 对象代理类 ObjectProxy的主要功能
+
+1. 针对 Object 类中的 equals(), hashCode(), toString() 方法的处理
+2. 根据代理的参数 转成 RpcProtocol协议
+3. 发送Rpc请求
+4. 返回请求任务，异步请求需要从上下文中获取，这里要怎么处理？

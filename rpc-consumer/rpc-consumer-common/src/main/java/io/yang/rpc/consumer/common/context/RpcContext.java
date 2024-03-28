@@ -1,6 +1,6 @@
 package io.yang.rpc.consumer.common.context;
 
-import io.yang.rpc.consumer.common.future.RPCFuture;
+import io.yang.rpc.proxy.api.future.RPCFuture;
 
 /**
  * @author zhangyang03
