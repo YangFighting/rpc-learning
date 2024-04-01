@@ -26,6 +26,16 @@ public class RpcConsumerNativeTest {
     }
 
     @Test
+    public void testInterfaceRpc(){
+        RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
+        DemoService demoService = rpcClient.create(DemoService.class);
+        String result = demoService.hello("yang");
+        LOGGER.info("返回的结果数据===>>> " + result);
+        rpcClient.shutdown();
+
+    }
+
+    @Test
     public void testAsyncInterfaceRpc() throws Exception {
         RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
         IAsyncObjectProxy demoService = rpcClient.createAsync(DemoService.class);

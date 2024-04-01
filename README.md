@@ -196,8 +196,8 @@ Q: RpcClient类调用create方法需要传入服务类，服务类怎么在服�
 Q: createAsync 与 create 的区别是什么？
 
 - create 暴露传入服务类，createAsync 则隐藏
+- 
 
+## 第20章：服务消费者动态代理扩展优化
 
-
-
-
+这里的扩展优化没有明白是什么意义？
