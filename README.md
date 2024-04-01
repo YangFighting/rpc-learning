@@ -201,3 +201,39 @@ Q: createAsync 与 create 的区别是什么？
 ## 第20章：服务消费者动态代理扩展优化
 
 这里的扩展优化没有明白是什么意义？
+
+
+
+## 第21章：注册中心基础服务功能的实现
+
+zk常用命令
+
+连接zookeeper server
+
+```bash
+sh zkCli.sh -server 127.0.0.1:2181
+```
+
+查看所有节点
+
+```bash
+ls /
+```
+
+查看节点数据
+
+```bash
+ls /path
+```
+
+删除节点
+
+```arduino
+delete /path
+```
+
+destroy 和 unRegister 的区别
+
+**Destroy** 通常指销毁或释放资源，通过销毁操作可以释放其占用的资源，以便系统可以回收这些资源并用于其他用途
+
+**Unregister**：通常指取消注册，例如从注册表或服务注册中心中删除一个条目
