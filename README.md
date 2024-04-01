@@ -189,5 +189,15 @@ Q: RpcClient类调用create方法需要传入服务类，服务类怎么在服�
 
 
 
+## 第19章：服务消费者动态代理实现异步调用
+
+动态代理为什么要写getClassType 方法
+
+Q: createAsync 与 create 的区别是什么？
+
+- create 暴露传入服务类，createAsync 则隐藏
+
+
+
 
 

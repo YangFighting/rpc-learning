@@ -1,7 +1,10 @@
 package io.yang.test.consumer;
 
 import io.yang.rpc.consumer.RpcClient;
+import io.yang.rpc.proxy.api.async.IAsyncObjectProxy;
+import io.yang.rpc.proxy.api.future.RPCFuture;
 import io.yang.rpc.test.api.DemoService;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +22,15 @@ public class RpcConsumerNativeTest {
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("yang");
         LOGGER.info("返回的结果数据===>>> " + result);
+        rpcClient.shutdown();
+    }
+
+    @Test
+    public void testAsyncInterfaceRpc() throws Exception {
+        RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
+        IAsyncObjectProxy demoService = rpcClient.createAsync(DemoService.class);
+        RPCFuture future = demoService.call("hello", "yang");
+        LOGGER.info("返回的结果数据===>>> " + future.get());
         rpcClient.shutdown();
     }
 }
