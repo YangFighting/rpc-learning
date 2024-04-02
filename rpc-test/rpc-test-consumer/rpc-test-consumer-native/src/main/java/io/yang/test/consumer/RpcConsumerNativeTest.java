@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static io.yang.rpc.constants.ServerConfigConstants.REGISTRY_ADDRESS;
+
 /**
  * @author zhangyang03
  * @Description 测试Java原生启动服务消费者
@@ -17,7 +19,7 @@ import org.slf4j.LoggerFactory;
 public class RpcConsumerNativeTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RpcConsumerNativeTest.class);
-    private static final String REGISTRY_ADDRESS = "127.0.0.1:2181";
+
 
     private RpcClient rpcClient;
 

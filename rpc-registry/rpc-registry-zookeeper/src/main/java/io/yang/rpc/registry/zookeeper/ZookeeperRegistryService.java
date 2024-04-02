@@ -1,6 +1,8 @@
 package io.yang.rpc.registry.zookeeper;
 
 import io.yang.rpc.common.helper.RpcServiceHelper;
+import io.yang.rpc.loadbalancer.api.ServiceLoadBalancer;
+import io.yang.rpc.loadbalancer.random.RandomServiceLoadBalancer;
 import io.yang.rpc.protocol.meta.ServiceMeta;
 import io.yang.rpc.registry.api.RegistryService;
 import io.yang.rpc.registry.api.config.RegistryConfig;
@@ -15,7 +17,6 @@ import org.apache.curator.x.discovery.details.JsonInstanceSerializer;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author zhangyang03
@@ -29,6 +30,9 @@ public class ZookeeperRegistryService implements RegistryService {
     public static final String ZK_BASE_PATH = "/yang_rpc";
 
     private ServiceDiscovery<ServiceMeta> serviceDiscovery;
+
+    //负载均衡接口
+    private ServiceLoadBalancer<ServiceInstance<ServiceMeta>> serviceLoadBalancer;
 
     @Override
     public void register(ServiceMeta serviceMeta) throws Exception {
@@ -55,22 +59,13 @@ public class ZookeeperRegistryService implements RegistryService {
     @Override
     public ServiceMeta discovery(String serviceName, int invokerHashCode) throws Exception {
         Collection<ServiceInstance<ServiceMeta>> serviceInstances = serviceDiscovery.queryForInstances(serviceName);
-        ServiceInstance<ServiceMeta> instance = this.selectOneServiceInstance((List<ServiceInstance<ServiceMeta>>) serviceInstances);
+        ServiceInstance<ServiceMeta> instance = serviceLoadBalancer.select((List<ServiceInstance<ServiceMeta>>) serviceInstances, invokerHashCode);
         if (instance != null) {
             return instance.getPayload();
         }
         return null;
     }
 
-    //随机挑选一个
-    private ServiceInstance<ServiceMeta> selectOneServiceInstance(List<ServiceInstance<ServiceMeta>> serviceInstances){
-        if (serviceInstances == null || serviceInstances.isEmpty()){
-            return null;
-        }
-        Random random = new Random();
-        int index = random.nextInt(serviceInstances.size());
-        return serviceInstances.get(index);
-    }
 
     @Override
     public void destroy() throws IOException {
@@ -84,6 +79,9 @@ public class ZookeeperRegistryService implements RegistryService {
         JsonInstanceSerializer<ServiceMeta> serializer = new JsonInstanceSerializer<>(ServiceMeta.class);
         this.serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceMeta.class).client(client).serializer(serializer).basePath(ZK_BASE_PATH).build();
         this.serviceDiscovery.start();
+
+        // todo 默认创建基于随机算法的负载均衡策略，后续基于SPI扩展
+        this.serviceLoadBalancer = new RandomServiceLoadBalancer<>();
 
     }
 }

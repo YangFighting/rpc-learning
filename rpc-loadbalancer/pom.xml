@@ -3,32 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>rpc-registry</artifactId>
+        <artifactId>rpc-learning</artifactId>
         <groupId>org.example</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rpc-registry-api</artifactId>
+    <artifactId>rpc-loadbalancer</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>rpc-loadbalancer-api</module>
+        <module>rpc-loadbalancer-random</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>rpc-protocol</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.example</groupId>
-            <artifactId>rpc-loadbalancer-random</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 
 </project>
