@@ -65,3 +65,4 @@ out
 # ignore log files
 
 *.log
+/logs/
