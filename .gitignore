@@ -66,3 +66,4 @@ out
 
 *.log
 /logs/
+/rpc-constants/src/main/java/io/yang/rpc/constants/ServerConfigConstants.java
