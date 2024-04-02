@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class RpcConsumerNativeTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RpcConsumerNativeTest.class);
-    private static final String REGISTRY_ADDRESS = "10.58.36.19:2181";
+    private static final String REGISTRY_ADDRESS = "127.0.0.1:2181";
 
     private RpcClient rpcClient;
 
