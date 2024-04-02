@@ -265,3 +265,7 @@ destroy 和 unRegister 的区别
 
 
 ## 第24章：服务消费者实现基于随机算法的负载均衡策略
+
+## 第25章：对标Dubbo实现SPI扩展机制的基础功能
+
+通过 目录`META-INF/yang/external`下的 配置，调用 `newInstance()` 方法来实例化对象
