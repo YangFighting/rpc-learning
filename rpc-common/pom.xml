@@ -24,6 +24,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>rpc-constants</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>

@@ -2,6 +2,7 @@ package io.yang.rpc.serialization.jdk;
 
 import io.yang.rpc.common.exception.SerializerException;
 import io.yang.rpc.serialization.api.Serialization;
+import io.yang.rpc.spi.annotation.SPIClass;
 
 import java.io.*;
 
@@ -10,6 +11,7 @@ import java.io.*;
  * @description Jdk 序列化
  * @date 2023/05/18 23:06
  **/
+@SPIClass
 public class JdkSerialization implements Serialization {
     @Override
     public <T> byte[] serialize(T obj) {

@@ -269,3 +269,11 @@ destroy 和 unRegister 的区别
 ## 第25章：对标Dubbo实现SPI扩展机制的基础功能
 
 通过 目录`META-INF/yang/external`下的 配置，调用 `newInstance()` 方法来实例化对象
+
+
+
+## 第26章：基于SPI扩展JDK序列化与反序列化机制
+
+没理解这种扩展的意义？
+
+序列化的实现类是根据RpcClient类的参数来选择的。但是为啥JdkSerialization 要单独成一个模块，不应该跟其他序列化实现类在一起，然后根据在同一文件`io.yang.rpc.serialization.api.Serialization`指定不同的实现类地址
