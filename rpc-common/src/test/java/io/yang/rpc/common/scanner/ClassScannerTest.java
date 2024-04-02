@@ -2,7 +2,6 @@ package io.yang.rpc.common.scanner;
 
 
 import io.yang.rpc.common.scanner.reference.RpcReferenceScanner;
-import io.yang.rpc.common.scanner.service.RpcServiceScanner;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -35,8 +34,6 @@ public class ClassScannerTest {
     @Test
     public void doScannerWithRpcServiceAnnotationFilterAndRegistryService() throws IOException {
 
-        RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(
-                ClassScannerTest.class.getPackage().getName());
     }
 
     /**

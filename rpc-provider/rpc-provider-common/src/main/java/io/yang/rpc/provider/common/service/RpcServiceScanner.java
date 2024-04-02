@@ -1,8 +1,10 @@
-package io.yang.rpc.common.scanner.service;
+package io.yang.rpc.provider.common.service;
 
 import io.yang.rpc.annotation.RpcService;
 import io.yang.rpc.common.helper.RpcServiceHelper;
 import io.yang.rpc.common.scanner.ClassScanner;
+import io.yang.rpc.protocol.meta.ServiceMeta;
+import io.yang.rpc.registry.api.RegistryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -26,8 +28,8 @@ public class RpcServiceScanner extends ClassScanner {
      * @return 扫描指定包下的类，并筛选使用@RpcService注解标注的类
      * @throws IOException IO
      */
-    public static Map<String, Object> doScannerWithRpcServiceAnnotationFilterAndRegistryService(
-            String scanPackage) throws IOException {
+    public static Map<String, Object> doScannerWithRpcServiceAnnotationFilterAndRegistryService(String host, int port,
+                                                                                                String scanPackage, RegistryService registryService) throws Exception {
         List<String> classNameList = getClassNameList(scanPackage);
         if (CollectionUtils.isEmpty(classNameList)) {
             return new HashMap<>();
@@ -39,15 +41,16 @@ public class RpcServiceScanner extends ClassScanner {
                 RpcService rpcService = clazz.getAnnotation(RpcService.class);
                 if (rpcService != null) {
                     //优先使用interfaceClass, 如果interfaceClass的name为空，再使用interfaceClassName
-
-                    //TODO 后续逻辑向注册中心注册服务元数据，同时向handlerMap中记录标注了RpcService注解的类实例
+                    ServiceMeta serviceMeta = new ServiceMeta(getServiceName(rpcService), rpcService.version(), host, port, rpcService.group());
+                    // 将元数据注册到注册中心
+                    registryService.register(serviceMeta);
                     //handlerMap中的Key先简单存储为serviceName+version+group，后续根据实际情况处理key
-                    String serviceName = getServiceName(rpcService);
-                    String key = RpcServiceHelper.buildServiceKey(serviceName, rpcService.version(), rpcService.group());
+                    String serviceName = serviceMeta.getServiceName();
+                    String key = RpcServiceHelper.buildServiceKey(serviceMeta.getServiceName(), serviceMeta.getServiceVersion(), serviceMeta.getServiceGroup());
                     handlerMap.put(key, clazz.newInstance());
 
                 }
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            } catch (Exception e) {
                 LOGGER.error("scan classes throws exception: ", e);
             }
         });
@@ -57,6 +60,7 @@ public class RpcServiceScanner extends ClassScanner {
     /**
      * Q: 获取serviceName 的顺序有什么意思
      * A: 优先使用 interfaceClass 参数获取 rpc服务提供者 类
+     *
      * @param rpcService 注解
      * @return 获取serviceName
      */

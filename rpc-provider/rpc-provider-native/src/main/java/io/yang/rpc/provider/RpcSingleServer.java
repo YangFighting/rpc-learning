@@ -1,7 +1,7 @@
 package io.yang.rpc.provider;
 
-import io.yang.rpc.common.scanner.service.RpcServiceScanner;
 import io.yang.rpc.provider.common.server.base.BaseServer;
+import io.yang.rpc.provider.common.service.RpcServiceScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 public class RpcSingleServer extends BaseServer {
     private static final Logger logger = LoggerFactory.getLogger(RpcSingleServer.class);
 
-    public RpcSingleServer(String serverAddress, String scanPackage, String reflectType) {
+    public RpcSingleServer(String serverAddress, String registryAddress, String registryType, String scanPackage, String reflectType) {
         //调用父类构造方法
-        super(serverAddress, reflectType);
+        super(serverAddress, registryAddress, registryType, reflectType);
 
         try {
-            this.handlerMap = RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(scanPackage);
+            this.handlerMap = RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(host, port, scanPackage, registryService);
         } catch (Exception e) {
             logger.error("RPC Server init error", e);
         }

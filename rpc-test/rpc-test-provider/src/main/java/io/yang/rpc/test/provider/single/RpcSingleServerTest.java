@@ -13,7 +13,7 @@ public class RpcSingleServerTest {
     @Test
     public void startRpcSingleServer(){
 
-        RpcSingleServer singleServer = new RpcSingleServer("127.0.0.1:27880", "io.yang.rpc.test",  "cglib");
+        RpcSingleServer singleServer = new RpcSingleServer("127.0.0.1:27880", "10.58.36.19:2181","zookeeper","io.yang.rpc.test",  "cglib");
         singleServer.startNettyServer();
     }
 }

@@ -12,6 +12,9 @@ import io.yang.rpc.codec.RpcDecoder;
 import io.yang.rpc.codec.RpcEncoder;
 import io.yang.rpc.provider.common.handler.RpcProviderHandler;
 import io.yang.rpc.provider.common.server.api.Server;
+import io.yang.rpc.registry.api.RegistryService;
+import io.yang.rpc.registry.api.config.RegistryConfig;
+import io.yang.rpc.registry.zookeeper.ZookeeperRegistryService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +38,28 @@ public class BaseServer implements Server {
 
     private final String reflectType;
 
+    protected RegistryService registryService;
 
-    public BaseServer(String serverAddress, String reflectType) {
+    public BaseServer(String serverAddress, String registryAddress, String registryType, String reflectType) {
         if (!StringUtils.isEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             this.host = serverArray[0];
             this.port = Integer.parseInt(serverArray[1]);
         }
         this.reflectType = reflectType;
+        this.registryService = getRegistryService(registryAddress, registryType);
+    }
+
+    private RegistryService getRegistryService(String registryAddress, String registryType) {
+        // todo 后续扩展支持SPI
+        RegistryService registryService = null;
+        try {
+            registryService = new ZookeeperRegistryService();
+            registryService.init(new RegistryConfig(registryAddress, registryType));
+        } catch (Exception e) {
+            logger.error("RPC Server init error", e);
+        }
+        return registryService;
     }
 
     @Override
