@@ -1,6 +1,7 @@
 package io.yang.rpc.proxy.api;
 
 import io.yang.rpc.proxy.api.config.ProxyConfig;
+import io.yang.rpc.spi.annotation.SPI;
 
 
 /**
@@ -8,6 +9,7 @@ import io.yang.rpc.proxy.api.config.ProxyConfig;
  * @Description
  * @create 2024-04-01 18:01
  */
+@SPI
 public interface ProxyFactory {
 
     /**

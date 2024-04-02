@@ -24,7 +24,7 @@ public class RpcConsumerNativeTest {
     private RpcClient rpcClient;
 
     public static void main(String[] args) {
-        RpcClient rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","1.0.0", "yang", "jdk", 3000, false, false);
+        RpcClient rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","jdk","1.0.0", "yang", "jdk", 3000, false, false);
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("yang");
         LOGGER.info("返回的结果数据===>>> " + result);
@@ -33,7 +33,7 @@ public class RpcConsumerNativeTest {
 
     @Before
     public void initRpcClient(){
-        rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","1.0.0", "yang", "jdk", 3000, false, false);
+        rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","jdk","1.0.0", "yang", "jdk", 3000, false, false);
 
     }
 
