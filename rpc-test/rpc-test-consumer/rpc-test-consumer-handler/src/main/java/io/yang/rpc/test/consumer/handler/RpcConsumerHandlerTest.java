@@ -20,7 +20,9 @@ public class RpcConsumerHandlerTest {
     public static void main(String[] args) throws Exception {
         RpcConsumer consumer = RpcConsumer.getInstance();
         // 同步，请求任务来自发送请求的返回
-        RPCFuture future = consumer.sendRequest(getRpcRequestProtocol());
+        RPCFuture future = null;
+//        RPCFuture future = consumer.sendRequest(getRpcRequestProtocol());
+        assert future != null;
         future.addCallback(new AsyncRPCCallback() {
             @Override
             public void onSuccess(Object result) {

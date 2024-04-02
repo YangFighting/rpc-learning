@@ -3,6 +3,7 @@ package io.yang.rpc.proxy.api.consumer;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.request.RpcRequest;
 import io.yang.rpc.proxy.api.future.RPCFuture;
+import io.yang.rpc.registry.api.RegistryService;
 
 /**
  * @author zhangyang03
@@ -13,5 +14,5 @@ public interface Consumer {
     /**
      * 消费者发送 request 请求
      */
-    RPCFuture sendRequest(RpcProtocol<RpcRequest> protocol) throws Exception;
+    RPCFuture sendRequest(RpcProtocol<RpcRequest> protocol, RegistryService registryService) throws Exception;
 }

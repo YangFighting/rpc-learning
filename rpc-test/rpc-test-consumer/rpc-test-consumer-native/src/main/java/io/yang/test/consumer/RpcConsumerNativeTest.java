@@ -4,6 +4,7 @@ import io.yang.rpc.consumer.RpcClient;
 import io.yang.rpc.proxy.api.async.IAsyncObjectProxy;
 import io.yang.rpc.proxy.api.future.RPCFuture;
 import io.yang.rpc.test.api.DemoService;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +17,26 @@ import org.slf4j.LoggerFactory;
 public class RpcConsumerNativeTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RpcConsumerNativeTest.class);
+    private static final String REGISTRY_ADDRESS = "10.58.36.19:2181";
+
+    private RpcClient rpcClient;
 
     public static void main(String[] args) {
-        RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
+        RpcClient rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","1.0.0", "yang", "jdk", 3000, false, false);
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("yang");
         LOGGER.info("返回的结果数据===>>> " + result);
         rpcClient.shutdown();
     }
 
+    @Before
+    public void initRpcClient(){
+        rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","1.0.0", "yang", "jdk", 3000, false, false);
+
+    }
+
     @Test
     public void testInterfaceRpc(){
-        RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
         DemoService demoService = rpcClient.create(DemoService.class);
         String result = demoService.hello("yang");
         LOGGER.info("返回的结果数据===>>> " + result);
@@ -37,7 +46,6 @@ public class RpcConsumerNativeTest {
 
     @Test
     public void testAsyncInterfaceRpc() throws Exception {
-        RpcClient rpcClient = new RpcClient("1.0.0", "yang", "jdk", 3000, false, false);
         IAsyncObjectProxy demoService = rpcClient.createAsync(DemoService.class);
         RPCFuture future = demoService.call("hello", "yang");
         LOGGER.info("返回的结果数据===>>> " + future.get());
