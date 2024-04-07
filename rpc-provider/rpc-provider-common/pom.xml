@@ -33,6 +33,12 @@
             <artifactId>rpc-reflect-jdk</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>rpc-reflect-cglib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
