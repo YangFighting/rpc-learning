@@ -33,7 +33,7 @@ public class RpcConsumerNativeTest {
 
     @Before
     public void initRpcClient(){
-        rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","jdk","1.0.0", "yang", "jdk", 3000, false, false);
+        rpcClient = new RpcClient(REGISTRY_ADDRESS, "zookeeper","cglib","1.0.0", "yang", "jdk", 3000, false, false);
 
     }
 

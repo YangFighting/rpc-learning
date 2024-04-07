@@ -29,6 +29,11 @@
         </dependency>
         <dependency>
             <groupId>org.example</groupId>
+            <artifactId>rpc-proxy-cglib</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
             <artifactId>rpc-registry-zookeeper</artifactId>
             <version>${project.version}</version>
         </dependency>
