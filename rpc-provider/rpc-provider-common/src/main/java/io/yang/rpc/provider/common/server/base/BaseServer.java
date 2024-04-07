@@ -40,22 +40,22 @@ public class BaseServer implements Server {
 
     protected RegistryService registryService;
 
-    public BaseServer(String serverAddress, String registryAddress, String registryType, String reflectType) {
+    public BaseServer(String serverAddress, String registryAddress, String registryType, String reflectType, String registryLoadBalanceType) {
         if (!StringUtils.isEmpty(serverAddress)) {
             String[] serverArray = serverAddress.split(":");
             this.host = serverArray[0];
             this.port = Integer.parseInt(serverArray[1]);
         }
         this.reflectType = reflectType;
-        this.registryService = getRegistryService(registryAddress, registryType);
+        this.registryService = getRegistryService(registryAddress, registryType, registryLoadBalanceType);
     }
 
-    private RegistryService getRegistryService(String registryAddress, String registryType) {
+    private RegistryService getRegistryService(String registryAddress, String registryType, String registryLoadBalanceType) {
         // todo 后续扩展支持SPI
         RegistryService registryService = null;
         try {
             registryService = new ZookeeperRegistryService();
-            registryService.init(new RegistryConfig(registryAddress, registryType));
+            registryService.init(new RegistryConfig(registryAddress, registryType, registryLoadBalanceType));
         } catch (Exception e) {
             logger.error("RPC Server init error", e);
         }

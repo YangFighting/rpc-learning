@@ -1,0 +1,1 @@
+random=io.yang.rpc.loadbalancer.random.RandomServiceLoadBalancer

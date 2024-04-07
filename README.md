@@ -309,3 +309,9 @@ Q: 服务消费者的动态代理和服务提供者的反射机制有什么区�
 ## 第38章：基于SPI扩展CGLib反射机制调用真实方法
 
 Q: 每次增加一种反射机制都需要在工程`rpc-provider-common`的pom增加依赖，这怎么是有利于程序扩展？这里还不能引用`rpc-reflect`工程
+
+ 
+
+## 第42章：基于SPI扩展随机算法负载均衡策略
+
+在 `ZookeeperRegistryService`初始化的方法中，根据 `RegistryConfig`的参数来生成负载均衡策略

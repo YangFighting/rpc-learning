@@ -1,5 +1,8 @@
 package io.yang.rpc.loadbalancer.api;
 
+import io.yang.rpc.constants.RpcConstants;
+import io.yang.rpc.spi.annotation.SPI;
+
 import java.util.List;
 
 /**
@@ -7,6 +10,7 @@ import java.util.List;
  * @Description 负载均衡接口
  * @create 2024-04-02 14:21
  */
+@SPI(RpcConstants.SERVICE_LOAD_BALANCER_RANDOM)
 public interface ServiceLoadBalancer<T> {
 
     /**

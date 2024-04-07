@@ -13,9 +13,9 @@ import org.slf4j.LoggerFactory;
 public class RpcSingleServer extends BaseServer {
     private static final Logger logger = LoggerFactory.getLogger(RpcSingleServer.class);
 
-    public RpcSingleServer(String serverAddress, String registryAddress, String registryType, String scanPackage, String reflectType) {
+    public RpcSingleServer(String serverAddress, String registryAddress, String registryType, String registryLoadBalanceType, String scanPackage, String reflectType) {
         //调用父类构造方法
-        super(serverAddress, registryAddress, registryType, reflectType);
+        super(serverAddress, registryAddress, registryType, reflectType, registryLoadBalanceType);
 
         try {
             this.handlerMap = RpcServiceScanner.doScannerWithRpcServiceAnnotationFilterAndRegistryService(host, port, scanPackage, registryService);

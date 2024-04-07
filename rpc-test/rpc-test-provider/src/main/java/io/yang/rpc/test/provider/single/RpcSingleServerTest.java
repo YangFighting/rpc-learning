@@ -13,9 +13,9 @@ import static io.yang.rpc.constants.ServerConfigConstants.REGISTRY_ADDRESS;
  */
 public class RpcSingleServerTest {
     @Test
-    public void startRpcSingleServer(){
+    public void startRpcSingleServer() {
 
-        RpcSingleServer singleServer = new RpcSingleServer("127.0.0.1:27880", REGISTRY_ADDRESS,"zookeeper","io.yang.rpc.test",  "cglib");
+        RpcSingleServer singleServer = new RpcSingleServer("127.0.0.1:27880", REGISTRY_ADDRESS, "zookeeper", "random", "io.yang.rpc.test", "cglib");
         singleServer.startNettyServer();
     }
 }

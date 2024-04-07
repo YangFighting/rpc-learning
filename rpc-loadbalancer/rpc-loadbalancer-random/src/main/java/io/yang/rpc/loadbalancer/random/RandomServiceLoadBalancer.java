@@ -1,6 +1,7 @@
 package io.yang.rpc.loadbalancer.random;
 
 import io.yang.rpc.loadbalancer.api.ServiceLoadBalancer;
+import io.yang.rpc.spi.annotation.SPIClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ import java.util.Random;
  * @Description 基于随机算法的负载均衡策略
  * @create 2024-04-02 14:23
  */
+@SPIClass
 public class RandomServiceLoadBalancer<T> implements ServiceLoadBalancer<T> {
 
     private final Logger logger = LoggerFactory.getLogger(RandomServiceLoadBalancer.class);

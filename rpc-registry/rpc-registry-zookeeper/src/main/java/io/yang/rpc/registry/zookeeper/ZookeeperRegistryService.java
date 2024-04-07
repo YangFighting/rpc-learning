@@ -2,10 +2,10 @@ package io.yang.rpc.registry.zookeeper;
 
 import io.yang.rpc.common.helper.RpcServiceHelper;
 import io.yang.rpc.loadbalancer.api.ServiceLoadBalancer;
-import io.yang.rpc.loadbalancer.random.RandomServiceLoadBalancer;
 import io.yang.rpc.protocol.meta.ServiceMeta;
 import io.yang.rpc.registry.api.RegistryService;
 import io.yang.rpc.registry.api.config.RegistryConfig;
+import io.yang.rpc.spi.loader.ExtensionLoader;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -80,8 +80,7 @@ public class ZookeeperRegistryService implements RegistryService {
         this.serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceMeta.class).client(client).serializer(serializer).basePath(ZK_BASE_PATH).build();
         this.serviceDiscovery.start();
 
-        // todo 默认创建基于随机算法的负载均衡策略，后续基于SPI扩展
-        this.serviceLoadBalancer = new RandomServiceLoadBalancer<>();
+        this.serviceLoadBalancer = ExtensionLoader.getExtension(ServiceLoadBalancer.class, registryConfig.getRegistryLoadBalanceType());
 
     }
 }
