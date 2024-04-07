@@ -5,13 +5,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.yang.rpc.common.helper.RpcServiceHelper;
 import io.yang.rpc.common.threadpool.ServerThreadPool;
-import io.yang.rpc.constants.RpcConstants;
 import io.yang.rpc.protocol.RpcProtocol;
 import io.yang.rpc.protocol.enumeration.RpcStatus;
 import io.yang.rpc.protocol.enumeration.RpcType;
 import io.yang.rpc.protocol.header.RpcHeader;
 import io.yang.rpc.protocol.request.RpcRequest;
 import io.yang.rpc.protocol.response.RpcResponse;
+import io.yang.rpc.reflect.api.ReflectInvoker;
+import io.yang.rpc.spi.loader.ExtensionLoader;
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
 import org.slf4j.Logger;
@@ -31,11 +32,10 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
     //存储服务名称#版本号#分组与对象实例的映射关系
     private final Map<String, Object> handlerMap;
 
-    //调用采用哪种类型调用真实方法
-    private final String reflectType;
+    private ReflectInvoker reflectInvoker;
 
     public RpcProviderHandler(String reflectType, Map<String, Object> handlerMap) {
-        this.reflectType = reflectType;
+        this.reflectInvoker = ExtensionLoader.getExtension(ReflectInvoker.class, reflectType);
         this.handlerMap = handlerMap;
     }
 
@@ -106,14 +106,7 @@ public class RpcProviderHandler extends SimpleChannelInboundHandler<RpcProtocol<
 
 
     private Object invokeMethod(Object serviceBean, Class<?> serviceClass, String methodName, Class<?>[] parameterTypes, Object[] parameters) throws Throwable {
-        switch (this.reflectType) {
-            case RpcConstants.REFLECT_TYPE_JDK:
-                return this.invokeJDKMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
-            case RpcConstants.REFLECT_TYPE_CGLIB:
-                return this.invokeCGLibMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
-            default:
-                throw new IllegalArgumentException("not support reflect type");
-        }
+        return this.reflectInvoker.invokeMethod(serviceBean, serviceClass, methodName, parameterTypes, parameters);
     }
 
 
